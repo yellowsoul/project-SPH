@@ -20,10 +20,20 @@ export default new VueRouter({
       meta:{show:true}
     },
     {
-      path:"/search/:keyword",
+      path:"/search/:keyword?",// 如何指定一个params占位参数可传可不传，后面加?（可理解为正则? 问号（0次或1次））
       component:Search,
       meta:{show:true},
-      name:"search"
+      name:"search",
+      // 路由组件能不能传递props数据?
+      // 布尔值写法:仅能传递params
+      // props:true,
+      // 对象写法:额外的给 路由组件传递一些props
+      // props:{a:1,b:2}
+      // 函数写法：可以params参数、query参数，通过props传递给路由组件(常用)
+      // props:($route) => {
+      //   return {keyword:$route.params.keyword,k:$route.query.k};
+      // }
+      props:($route) => ({keyword:$route.params.keyword,k:$route.query.k})
     },
     {
       path:"/login",
