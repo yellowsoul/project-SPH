@@ -132,3 +132,15 @@ modules
 
 
 10：完成TypeNav三级联动展示数据业务
+
+[
+  {
+    id:1,
+    name:'电子书',
+    child:[
+      {
+        {id:2, name:"灰太狼", child:[]},
+      }
+    ]
+  }
+]
