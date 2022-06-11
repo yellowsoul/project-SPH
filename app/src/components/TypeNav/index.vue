@@ -1695,6 +1695,11 @@
 <script>
 export default {
   name: "TypeNav",
+  // 组件挂载完毕：可以向服务器发请求
+  mounted(){
+    // 通知Vuex发请，获取数据，存储于仓库当中
+    this.$store.dispatch('categoryList');
+  },
   data() {
     return {};
   },

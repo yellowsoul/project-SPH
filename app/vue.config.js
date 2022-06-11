@@ -9,6 +9,12 @@ module.exports = {
     port: 8081,
     https: false,
     hot: false,
-    proxy: null
+    // 代理跨域
+    proxy:  {
+      '/api': {
+        target: 'http://gmall-h5-api.atguigu.cn',
+        // pathRewrite: {'^/api' : ''}
+      }
+    }
   }
 }
