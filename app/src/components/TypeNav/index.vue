@@ -92,10 +92,14 @@ export default {
   },
   // 组件挂载完毕：可以向服务器发请求
   mounted() {
-    // 通知Vuex发请，获取数据，存储于仓库当中
-    this.$store.dispatch("categoryList");
+    /**
+     * 这段代码已移至app根组件的mounted函数里，因为不需要重复请求
+     * 通知Vuex发请，获取数据，存储于仓库当中
+     * this.$store.dispatch("categoryList"); 
+    */
+
     // 当组件挂载完毕，让show属性变为false
-    // 如果不是Home路由组件，将TypeNav
+    // 如果不是Home路由组件，将TypeNav进行隐藏
     if (this.$route.path != "/home") {
       this.show = false;
     }

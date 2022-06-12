@@ -2,7 +2,7 @@
   <div>
     <Header></Header>
     <!-- 路由组件出口的地方 -->
-    <router-view/>
+    <router-view />
     <!-- 在Home、Search是显示的、在登录、注册隐藏 -->
     <Footer v-show="$route.meta.show"></Footer>
   </div>
@@ -10,19 +10,23 @@
 
 <script>
 //引入
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 export default {
-  name:'App',
-  components:{
+  name: "App",
+  components: {
     Header,
-    Footer
+    Footer,
   },
-  data () {
-    return {}
+  data() {
+    return {};
+  },
+  mounted() {
+    // 派发一个action||获取商品分类的三级数据，存储于仓库当中
+    this.$store.dispatch("categoryList");
   },
   methods: {},
-}
+};
 </script>
 
 <style scoped>
