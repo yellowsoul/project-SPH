@@ -5,8 +5,12 @@
         <!--banner轮播-->
         <div class="swiper-container" id="mySwiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
+            <div
+              class="swiper-slide"
+              v-for="(carousel, index) in bannerList"
+              :key="carousel.id"
+            >
+              <img :src="carousel.imgUrl" />
             </div>
           </div>
           <!-- 如果需要分页器 -->
@@ -91,20 +95,41 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
+// 引包
+import Swiper from "swiper";
 export default {
   name: "ListContainer",
   data() {
     return {};
   },
-  mounted(){
+  mounted() {
     // 派发action:通过Vuex发起请求，将数据存储在仓库当中
-    this.$store.dispatch('getBannerList')
+    this.$store.dispatch("getBannerList");
+    // 在new Swiper实例之前，页面中结构必须得有【现在把new Swiper实例放在mounted这里发现不行】
+    // 因为dispatch当中涉及到异步语句，导致v-for遍历的时候结构还没有完全 因此不行
+    setTimeout(() => {
+      var mySwiper = new Swiper ('.swiper-container', {
+        loop: true, // 循环模式选项
+        
+        // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination',
+          // 点击小球的时候也切换图片
+          clickable:true,
+        },
+        // 如果需要前进后退按钮
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }
+      })
+    },2000)
   },
-  computed:{
+  computed: {
     ...mapState({
-      bannerList:(state) => state.home.bannerList
-    })
+      bannerList: (state) => state.home.bannerList,
+    }),
   },
   methods: {},
 };
@@ -283,3 +308,7 @@ export default {
   }
 }
 </style>
+
+// 第一步：引包（相应JS|CSS） 
+// 第二步：页面中结构务必要有
+// 第三步：（页面当中务必要有结构）：new Swiper实例【轮播图添加动画效果】
