@@ -3,7 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <div class="swiper-container" ref="mySwiper">
           <div class="swiper-wrapper">
             <div
               class="swiper-slide"
@@ -109,17 +109,16 @@ export default {
     this.$store.dispatch("getBannerList");
     // 在new Swiper实例之前，页面中结构必须得有【现在把new Swiper实例放在mounted这里发现不行】
     // 因为dispatch当中涉及到异步语句，导致v-for遍历的时候结构还没有完整 因此不行
-
   },
   computed: {
     ...mapState({
       bannerList: (state) => state.home.bannerList,
     }),
   },
-  watch:{
+  watch: {
     // 监听bannerList数据的变化：因为这条数据它发生过变化----由空数组变为数组里面有四个元素
-    bannerList:{
-      handler(newValue, oldValue){
+    bannerList: {
+      handler(newValue, oldValue) {
         // 现在咱们通过watch监听bannerList属性的属性值的变化
         // 如果执行handler方法，代表组件实例身上这个属性的属性值应该有了【数组：四个元素】
         // 当前这个函数执行，只能保证bannerList数据已经有了，但是你没办法保证v-for已经执行结束了
@@ -127,25 +126,24 @@ export default {
         // nextTick:在下次DOM更新 循环结束之后 执行延迟回调。在 修改数据之后  立即使用这个方法，获取更新后的 DOM.
         this.$nextTick(() => {
           // 当你执行这个回调的时候：保证服务器数据回来了，v-for执行完毕了【一定轮播图的结构有了】
-          var mySwiper = new Swiper ('.swiper-container', {
+          var mySwiper = new Swiper(this.$refs.mySwiper, {
             loop: true, // 循环模式选项
-            
+
             // 如果需要分页器
             pagination: {
-              el: '.swiper-pagination',
+              el: ".swiper-pagination",
               // 点击小球的时候也切换图片
-              clickable:true,
+              clickable: true,
             },
             // 如果需要前进后退按钮
             navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            }
-          })
-        })
-
-      }
-    }
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          });
+        });
+      },
+    },
   },
   methods: {},
 };
