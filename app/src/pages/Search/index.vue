@@ -187,7 +187,7 @@ export default {
   },
   computed: {
     // mapGetters里面的写法，传递的是数据，因为getters计算是没有划分模块【home,search】
-    ...mapGetters(["goodsList", "trademarkList", "attrsList"]),
+    ...mapGetters(["goodsList"]),
   },
   methods: {
     // 向服务器发请求获取search模块数据（根据参数不同返回不同的数据进行展示）
