@@ -2,14 +2,15 @@
   <div class="floor">
     <div class="py-container">
       <div class="title clearfix">
-        <h3 class="fl">{{list.name}}</h3>
+        <h3 class="fl">{{ list.name }}</h3>
         <div class="fr">
           <ul class="nav-tabs clearfix">
-            <li class="active" 
-              v-for="(nav, index) in list.navList" 
+            <li
+              class="active"
+              v-for="(nav, index) in list.navList"
               :key="index"
             >
-              <a href="#tab1" data-toggle="tab">{{nav.text}}</a>
+              <a href="#tab1" data-toggle="tab">{{ nav.text }}</a>
             </li>
           </ul>
         </div>
@@ -19,30 +20,15 @@
           <div class="floor-1">
             <div class="blockgary">
               <ul class="jd-list">
-                <li 
-                  v-for="(keyword,index) in list.keywords" 
-                  :key="index"
-                >{{keyword}}</li>
+                <li v-for="(keyword, index) in list.keywords" :key="index">
+                  {{ keyword }}
+                </li>
               </ul>
               <img :src="list.imgUrl" />
             </div>
             <div class="floorBanner">
-              <div class="swiper-container" ref="cur">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide" 
-                    v-for="(carousel, index) in list.carouselList"
-                    :key="carousel.id"
-                  >
-                    <img :src="carousel.imgUrl" />
-                  </div>
-                </div>
-                <!-- 如果需要分页器 -->
-                <div class="swiper-pagination"></div>
-
-                <!-- 如果需要导航按钮 -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-              </div>
+              <!-- 轮播图的地方 -->
+              <Carousel :list="list.carouselList" />
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
@@ -73,37 +59,19 @@
 </template>
 
 <script>
-// 引入Swiper
-import Swiper from 'swiper';
 export default {
   name: "",
-  props:{
-    list:{
-      type:Object,
-      default:() => ({})
-    }
+  props: {
+    list: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   data() {
     return {};
   },
   // 组件挂载完毕
-  mounted(){
-    var mySwiper = new Swiper(this.$refs.cur, {
-      loop: true, // 循环模式选项
-
-      // 如果需要分页器
-      pagination: {
-        el: ".swiper-pagination",
-        // 点击小球的时候也切换图片
-        clickable: true,
-      },
-      // 如果需要前进后退按钮
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-    });
-  },
+  mounted() {},
   methods: {},
 };
 </script>
