@@ -61,7 +61,7 @@ export default new VueRouter({
       // props:($route) => {
       //   return {keyword:$route.params.keyword,k:$route.query.k};
       // }
-      props:($route) => ({keyword:$route.params.keyword,k:$route.query.k})
+      // props:($route) => ({keyword:$route.params.keyword,k:$route.query.k})
     },
     {
       path:"/login",
