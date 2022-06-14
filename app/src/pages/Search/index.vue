@@ -167,7 +167,7 @@ export default {
     };
   },
 
-  // 当组件挂载完毕之前执行一次【先于mounted之前】 
+  // 当组件挂载完毕之前执行一次【先于mounted之前】 将带有参数进行修改
   beforeMount(){
     //复杂的写法
     // this.searchParams.category1Id = this.$route.query.category1Id;
@@ -177,8 +177,10 @@ export default {
     // this.searchParams.keyword = this.$route.params.keyword;
     
     // Object.assign:ES6新增语法，合并对象
+    // 在发请求之前，把接口需要传递参数，进行整理（在给服务器发请求之前，把参数整理好，服务器就会返回查询的数据）
     Object.assign(this.searchParams,this.$route.query,this.$route.params);
-
+    // console.log('发请求之前',this.searchParams)
+    
   },
   // 组件挂载完毕执行一次【仅仅执行一次】
   mounted() {
@@ -196,6 +198,22 @@ export default {
       this.$store.dispatch("getSearchList",this.searchParams);
     },
   },
+  // 数据监听：监听组件实例身上的属性的属性值变化
+  watch:{
+    // 监听路由的信息是否发生变化，如果发生变化再次发起请求
+    $route(newValue, oldVlue){
+      // 再次发请求之前整理带给服务器参数
+      Object.assign(this.searchParams, this.$route.query, this.$route.params)
+      // 再次发送请求
+      this.getData()
+      // console.log(this.searchParams)
+      // 每一次请求完毕，应该把相应的1、2、3级分类的id置空，让他接受下一次的相应1、2、3id
+      // 分类名字与关键字不用清理：因为每一次路由发生变化的时候，都会给它赋予新的数据（关键字清空有争议：我自己理解为要清空keyword，因为正常用户再点击三级分类菜单应该是重新查看对应的产品列表，甚至可能连搜索框内的文字都要清空）
+      this.searchParams.category1Id = '';
+      this.searchParams.category2Id = '';
+      this.searchParams.category3Id = '';
+    }
+  }
 };
 </script>
 
