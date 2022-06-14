@@ -27,3 +27,9 @@ mock数据（模拟）：如果你想mock数据，需要用到一个插件mockjs
 3)把mock数据需要的图片放置到public文件夹中【public文件夹在打包的时候，会把相应的资源原封不动打包到dist文件夹中】
 4)创建mockServe.js通过mockjs插件实现模拟数据
 5)mockServe.js文件在入口文件中引入（至少需要执行一次，才能模拟数据）
+
+
+
+5)ListContainer组件开发重点？
+安装Swiper插件：最新版本6，安装的是swiper@5
+cnpm install --save swiper@5

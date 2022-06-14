@@ -14,6 +14,8 @@ Vue.component(TypeNav.name, TypeNav);
 // 引入MockServe.js----mock数据
 import '@/mock/mockServe';
 
+// 引入swiper样式
+import "swiper/css/swiper.css"
 new Vue({
   render: h => h(App),
   // 注册路由：底下的写法KV一致省略V【router小写的】
