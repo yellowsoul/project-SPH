@@ -18,11 +18,13 @@
             <li class="with-x" v-if="searchParams.keyword">{{searchParams.keyword}}<i @click="removeKeyword">×</i></li>
             <!-- 品牌的面包屑 -->
             <li class="with-x" v-if="searchParams.trademark">{{searchParams.trademark.split(":")[1]}}<i @click="removeTradeMark">×</i></li>
+            <!-- 平台的售卖的属性值展示 -->
+            <li class="with-x" v-for="(attrValue, index) in searchParams.props" :key="index">{{attrValue.split(":")[1]}}<i @click="removeAttr(index)">×</i></li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector @trademarkInfo="trademarkInfo"/>
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -232,7 +234,7 @@ export default {
       }
     },
 
-    // 自定义事件回调
+    // 点击品牌（子组件自定义事件回调）
     trademarkInfo(trademark){
       // 1.整理品牌字段的参数  "ID:品牌名称"
       this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`
@@ -246,6 +248,29 @@ export default {
       // 将品牌信息置空
       this.searchParams.trademark = undefined;
       // 再次发请求
+      this.getData();
+    },
+
+    // 收集平台属性地方回调函数（子组件自定义事件）
+    attrInfo(attr, attrValue){
+      // ["属性ID:属性值:属性名"]
+      // 参数格式整理好
+      let props = `${attr.attrId}:${attrValue}:${attr.attrName}`;
+      // console.log(attr, attrValue)
+
+      // 数组去重
+      // if语句里面只有一行代码可以省略大花括号{}
+      if(this.searchParams.props.indexOf(props)==-1) this.searchParams.props.push(props);
+      // 再次发求
+      this.getData();
+      // this.searchParams.props = [];
+    },
+
+    // removeAttr删除售卖的属性
+    removeAttr(index){
+      // 再次整理参数
+      this.searchParams.props.splice(index,1);
+      // 再发请求
       this.getData();
     }
   },
