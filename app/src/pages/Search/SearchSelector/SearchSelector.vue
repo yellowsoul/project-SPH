@@ -3,8 +3,9 @@
     <div class="type-wrap logo">
       <div class="fl key brand">品牌</div>
       <div class="value logos">
+        <!-- 品牌 -->
         <ul class="logo-list">
-          <li v-for="(trademark, index) in trademarkList" :key="trademark.tmId">{{trademark.tmName}}</li>
+          <li v-for="(trademark, index) in trademarkList" :key="trademark.tmId" @click="tradeMarkHandler(trademark)">{{trademark.tmName}}</li>
         </ul>
       </div>
       <div class="ext">
@@ -32,6 +33,15 @@
     name: 'SearchSelector',
     computed:{
       ...mapGetters(['trademarkList','attrsList'])
+    },
+    methods:{
+      // 品牌的事件处理函数
+      tradeMarkHandler(trademark){
+        // 比如点击了品牌（苹果），还是需要整理参数，向服务器发请求获取相应的数据进行展示
+        // 问题：在哪个组件中发请求，父组件，为什么？
+        // 答：因为父组件中searchParams参数是带给服务器参数，子组把你点击的品牌信息，需要给父组件传递过去---自定义事件
+        this.$emit('trademarkInfo',trademark);
+      }
     }
   }
 </script>
