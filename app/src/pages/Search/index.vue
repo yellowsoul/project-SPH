@@ -122,35 +122,7 @@
             </ul>
           </div>
           <!-- 分页器 -->
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <Pagination/>
         </div>
       </div>
     </div>
@@ -320,15 +292,15 @@ export default {
       // flag形参，它是一个标记，代表用户点击的是综合（1）价格（2）【用户点击的时候传递进来的】
       let originOrder = this.searchParams.order;
       // 这里获取到的是最开始的状态
-      let originFlag = this.searchParams.order.split(":")[0];
-      let originSort = this.searchParams.order.split(":")[1];
+      let originFlag = originOrder.split(":")[0];
+      let originSort = originOrder.split(":")[1];
       // 准备一个新的order属性值
       let newOrder = '';
-      // 点击的是综合
+      // 初次点击的是综合(之后点击判断是否为同一个按钮)
       if(flag == originFlag){
         newOrder = `${originFlag}:${originSort=="desc"?"asc":"desc"}`;
       }else{
-        // 点击的是价格
+        // 初次点击的是价格(之后点击判断不是同一个按钮)
         newOrder = `${flag}:${'desc'}`;
       }
       // 将新的order赋予searchParams
