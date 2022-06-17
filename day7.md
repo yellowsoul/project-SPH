@@ -71,3 +71,29 @@ continues:代表分页连续页码个数
 
 5)分页器多页的展示：分为上中下【中间部分】
 v-for:数组|数字|字符串|对象
+
+
+6)今天很重要的事件事情：手写一个自定义分页器功能
+
+/***************************************** */
+【黄龙处理分页BUG笔记】:
+  computed: {
+    // 黄龙解决bug：初始展示的是所有页数，如果用户点击了最后一页，再点击售卖属性参数|品牌名 重新请求的数据展示页码跟上一次的数据页码肯定是不对称的
+    // 解决方式：取出 售卖属性参数|品牌名参数来作监听，参数发生改变pageNo重置为1
+    isTypePropsAndTrademark(){
+      let {props, trademark} = this.searchParams;
+      return {props, trademark}
+    }
+  },
+  watch: {
+    // 黄龙处理bug：监听点击了售卖属性|品牌，监听数据发生变化pageNo重置为第1页
+    isTypePropsAndTrademark(e){
+      if(e.props||e.trademark){
+        // console.log('三级分类改变'+e.props,'|品牌改变'+e.trademark)
+        this.searchParams.pageNo = 1;
+        // 重新发请求
+        this.getData();
+      }
+    }
+  }
+  /***************************************** */

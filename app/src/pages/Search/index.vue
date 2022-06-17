@@ -122,7 +122,13 @@
             </ul>
           </div>
           <!-- 分页器:测试分页器阶段，这里数据将来需要替换的 -->
-          <Pagination :pageNo="30" :pageSize="3" :total="91" :continues="5"/>
+          <Pagination 
+            :pageNo="searchParams.pageNo" 
+            :pageSize="searchParams.pageSize" 
+            :total="total" 
+            :continues="5"
+            @getPageNo="getPageNo"
+          />
         </div>
       </div>
     </div>
@@ -131,7 +137,7 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState} from "vuex";
 export default {
   name: "Search",
   components: {
@@ -156,7 +162,7 @@ export default {
         // 分布器用的：代表的是当前是第几页
         pageNo: 1,
         // 代表的是每一页展示数据个数
-        pageSize: 10,
+        pageSize: 3,
         // 平台售卖属性操作带的参数
         props: [],
         // 品牌
@@ -205,6 +211,18 @@ export default {
     // 降序
     isDesc() {
       return this.searchParams.order.indexOf("desc") != -1;
+    },
+
+    // 获取search模块展示产品一共多少数据
+    ...mapState({
+      total: state => state.search.searchList.total
+    }),
+
+    // 黄龙解决bug：初始展示的是所有页数，如果用户点击了最后一页，再点击售卖属性参数|品牌名 重新请求的数据展示页码跟上一次的数据页码肯定是不对称的
+    // 解决方式：取出 售卖属性参数|品牌名参数来作监听，参数发生改变pageNo重置为1
+    isTypePropsAndTrademark(){
+      let {props, trademark} = this.searchParams;
+      return {props, trademark}
     }
   },
   methods: {
@@ -307,6 +325,16 @@ export default {
       this.searchParams.order = newOrder;
       // 再次发请求
       this.getData();
+    },
+
+    // 自定义事件的回调函数---获取当前第几页
+    getPageNo(pageNo){
+      // console.log(pageNo);
+      // 整理带给服务器参数
+      this.searchParams.pageNo = pageNo
+      // 再次发请求
+      this.getData()
+      console.log(this.searchParams.pageNo)
     }
   },
   // 数据监听：监听组件实例身上的属性的属性值变化
@@ -333,6 +361,16 @@ export default {
        * this.$route.params.keyword = undefined // 防止警告
        */
     },
+
+    // 黄龙处理bug：监听点击了售卖属性|品牌，监听数据发生变化pageNo重置为第1页
+    isTypePropsAndTrademark(e){
+      if(e.props||e.trademark){
+        // console.log('三级分类改变'+e.props,'|品牌改变'+e.trademark)
+        this.searchParams.pageNo = 1;
+        // 重新发请求
+        this.getData();
+      }
+    }
   },
 };
 </script>
