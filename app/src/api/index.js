@@ -31,4 +31,9 @@ export const reqFloorList = () => mockRequests({url:'/floor',method:'get'});
  */
 // 当前这个函数需不需要接受外部传递参数
 // 当前这个接口（获取搜索模块的数据），给服务器传递一个默认参数params【至少是一个空对象】
-export const reqGetSearchInfo = (params) => requests({url:'/list',method:'post',data:params})
+export const reqGetSearchInfo = (params) => requests({url:'/list',method:'post', data:params})
+
+
+// 获取产品详情信息的接口： URL: /api/item/{ skuId }  请求方式：get
+
+export const reqGoodsInfo = (skuId) => requests({url:`/item/${skuId}`, method:'get'})
