@@ -31,18 +31,23 @@
 <script>
 export default {
   name: "Pagination",
-  props:["pageNo","pageSize","total","continues"],
+  // 父组件传递给子组件的数据：当前页、每一页展示多少条数据、数据总个数、连续页码数
+  props:["pageNo", "pageSize", "total", "continues"],
   // 计算属性
   computed:{
     // 总共多少页
     totalPage(){
+      // 向上取整
       return Math.ceil(this.total / this.pageSize);
     },
+
     // 计算出连续的页码的起始数字与结束数字[连续页码的数字：至少是5]
     startNumAndEndNum(){
+      // 解构出连续的页码数、当前页码、总页数
       const { continues, pageNo, totalPage } = this;
       // 先定义两个变量存储起始数字与结束数字
       let start = 0, end = 0;
+
       // 连续页码数5【就是至少5页】，如果出现不正常的现象【就是不够5页】
       // 不正常现象【总页数没有连续页码多】
       if(continues > totalPage ){
@@ -60,7 +65,7 @@ export default {
         // 比如当前页是第8页  连续页码 7 
         // 5 6 7 【8】 9 10 11
 
-        // 把出现不正常的现象【start数字出现0|负数】纠正
+        // 把出现不正常的现象【pageNo:1、2】【start数字出现0|负数】纠正
         if(start < 1){
           start = 1;
           end = continues;
