@@ -16,9 +16,9 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom :skuImageList="skuImageList"/>
+          <Zoom :skuImageList="skuImageList" />
           <!-- 小图列表 -->
-          <ImageList :skuImageList="skuImageList"/>
+          <ImageList :skuImageList="skuImageList" />
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -75,12 +75,15 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt">
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="skuNum" @change="changeSkuNum"/>
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:skuNum=1">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <!-- 以前咱们的路由跳转，从A路由跳转到B路由，这里在加入购物车，进行路由跳转之前，发请求 
+                    把你购买的产品的信息通过请求的形式通知服务器，服务器进行相应的存储
+                -->
+                <a @click="addShopcar">加入购物车</a>
               </div>
             </div>
           </div>
@@ -337,7 +340,12 @@
 
   export default {
     name: 'Detail',
-    
+    data(){
+      return {
+        // 购买产品的个数
+        skuNum:1
+      }
+    },
     components: {
       ImageList,
       Zoom
@@ -363,6 +371,39 @@
         })
         // 点击的那个售卖属性值添加高亮
         saleAttrValue.isChecked = 1;
+      },
+
+      // 表单元素修改产品个数
+      changeSkuNum(event){
+        // 用户输入进来的文本 * 1
+        let value = event.target.value *1;
+        // 如果用户输入进来的非法,出现NaN或者小于1
+        if(isNaN(value)||value < 1){
+          this.skuNum = 1;
+        }else{
+          // 正常大于1【大于1整数不能出现小数】
+          this.skuNum = parseInt(value);
+        }
+      },
+
+      // 加入购物车的回调函数
+      async addShopcar(){
+        // 1.发请求---将产品加入到数库（通知服务器）
+        /**
+         * 当前这里是派发一个action，也向服务器发请求，判断加入购物车是成功还是失败了，进行相应操作。
+         * this.$store.dispatch('addOrUpdateShopCart',{skuId:this.$route.params.skuid, skuNum:this.skuNum})
+         * 上面这行代码说白了：调用仓库中的addOrUpdateShopCart,这个方法加上saync，返回一定是一个Promise
+         * 要么成功|要么失败
+        */
+
+        try {
+          // 2.服务器存储成功-----进行路由跳转
+          await this.$store.dispatch('addOrUpdateShopCart',{skuId:this.$route.params.skuid, skuNum:this.skuNum});
+          // 路由跳转
+        } catch (error) {
+          // 3.失败，给用户进行提示
+          alert(error.message);
+        } 
       }
     }
   }
