@@ -16,7 +16,7 @@ const actions = {
     }
   },
 
-  // 将产品添加到购物车中
+  // 将产品添加到购物车中||修改某一个产品的个数
   async addOrUpdateShopCart({commit},{skuId, skuNum}){
     // 加入购物车返回的结果
     // 加入购物车以后（发请求），前台将参数给服务器
@@ -25,6 +25,7 @@ const actions = {
     let result = await reqAddOrUpdateShopCart(skuId, skuNum);
     // 代表服务器加入购物车成功
     if(result.code == 200){
+      // 返回成功标记
       return "ok";
     }else{
       // 代表加入购物车失败
