@@ -24,11 +24,12 @@ const requests = axios.create({
 requests.interceptors.request.use((config) => {
   // config：配置对象，对象里面有一个属性很重要，headers请求头
   // 进度条开始动
+  nprogress.start();
+  // uuid游客身份获取购物车结算数据
   if(store.state.detail.uuid_token){
     // 请求头添加一个字段(userTempId):和后台老师商量好了
     config.headers.userTempId = store.state.detail.uuid_token
   }
-  nprogress.start();
   return config;
 })
 
