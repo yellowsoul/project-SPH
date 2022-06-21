@@ -13,7 +13,7 @@ export const reqCategoryList = () => requests({url:'/product/getBaseCategoryList
 export const reqGetBannerList = () => mockRequests({url:'/banner', method:'get'});
 
 // 获取floor数据
-export const reqFloorList = () => mockRequests({url:'/floor',method:'get'});
+export const reqFloorList = () => mockRequests({url:'/floor',method:'get'}); // export const reqFloorList = () => mockRequests.get("/floor");
 
 
 // 获取搜索模块数据 地址：/api/list  请求方式：post  参数：需要带参数
@@ -45,3 +45,9 @@ export const reqAddOrUpdateShopCart = (skuId, skuNum) => requests({url:`/cart/ad
 
 // 获取购物车列表数据接口 URL: /api/cart/cartList
 export const reqCartList = () => requests({url:'/cart/cartList', method:'get'})
+
+// 删除购物车产品的接口 URL: /api/cart/deleteCart/{skuId}  method:delete
+export const reqDeleteCartById = (skuId) => requests({url:`/cart/deleteCart/${skuId}`, method:'delete'})
+
+//修改商品的选中状态 URL: /api/cart/checkCart/{skuId}/{isChecked} GET
+export const reqUpdateCheckedByid = (skuId, isChecked) => requests({url:`/cart/checkCart/${skuId}/${isChecked}`, method:'get'})
