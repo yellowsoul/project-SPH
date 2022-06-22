@@ -11,18 +11,10 @@
         <div class="cart-th6">操作</div>
       </div>
       <div class="cart-body">
-        <ul
-          class="cart-list"
-          v-for="(cart, index) in cartInfoList"
-          :key="cart.id"
-        >
+        <ul class="cart-list" v-for="(cart, index) in cartInfoList" :key="cart.id">
           <li class="cart-list-con1">
-            <input
-              type="checkbox"
-              name="chk_list"
-              :checked="cart.isChecked == 1"
-              @change="updateChecked(cart, $event)"
-            />
+            <input type="checkbox" name="chk_list" :checked="cart.isChecked == 1"
+              @change="updateChecked(cart, $event)" />
           </li>
           <li class="cart-list-con2">
             <img :src="cart.imgUrl" />
@@ -32,26 +24,10 @@
             <span class="price">{{ cart.skuPrice }}.00</span>
           </li>
           <li class="cart-list-con5">
-            <a
-              href="javascript:void(0)"
-              class="mins"
-              @click="handler('minus', -1, cart)"
-              >-</a
-            >
-            <input
-              autocomplete="off"
-              type="text"
-              minnum="1"
-              class="itxt"
-              :value="cart.skuNum"
-              @change="handler('change', $event.target.value * 1, cart)"
-            />
-            <a
-              href="javascript:void(0)"
-              class="plus"
-              @click="handler('add', 1, cart)"
-              >+</a
-            >
+            <a href="javascript:void(0)" class="mins" @click="handler('minus', -1, cart)">-</a>
+            <input autocomplete="off" type="text" minnum="1" class="itxt" :value="cart.skuNum"
+              @change="handler('change', $event.target.value * 1, cart)" />
+            <a href="javascript:void(0)" class="plus" @click="handler('add', 1, cart)">+</a>
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{ cart.skuNum * cart.skuPrice }}</span>
@@ -66,11 +42,12 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllCheck" />
+        <input class="chooseAll" type="checkbox" :checked="isAllCheck && cartInfoList.length > 0"
+          @change="updateAllCartChecked" />
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a @click="deleteAllCheckedCart">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -139,7 +116,7 @@ export default {
         });
         // 再一次获取服务器最新的数据进行展示
         this.getData();
-      } catch (error) {}
+      } catch (error) { }
     }, 1000),
 
     // 删除某一个产品的操作
@@ -160,13 +137,38 @@ export default {
       // console.log(isChecked)
       try {
         // 如果修改数据成功，再次获取服务器数据(购物车)
-        await this.$store.dispatch("reqUpdateCheckedByid", {
+        await this.$store.dispatch("updateCheckedByid", {
           skuId: cart.skuId,
           isChecked,
         });
         this.getData();
       } catch (error) {
-        alert(error.message)
+        alert(error.message);
+      }
+    },
+
+    // 删除全部选中的产品
+    // 这个回调函数咱们没办法收集到一些有用数据
+    async deleteAllCheckedCart() {
+      try {
+        // 派发一个action
+        await this.$store.dispatch("deleteAllCheckedCart");
+        // 再发请求获取购物车列表
+        this.getData();
+      } catch (error) {
+        alert(error.message);
+      }
+    },
+
+    // 修改全部产品选中状态
+    async updateAllCartChecked(event) {
+      try {
+        let isChecked = event.target.checked ? "1" : "0";
+        // 派发action
+        await this.$store.dispatch("updateAllCartIsChecked", isChecked);
+        this.getData();
+      } catch (error) {
+        alert(error.massage);
       }
     },
   },
@@ -212,7 +214,7 @@ export default {
       padding: 10px;
       overflow: hidden;
 
-      & > div {
+      &>div {
         float: left;
       }
 
@@ -249,7 +251,7 @@ export default {
         border-bottom: 1px solid #ddd;
         overflow: hidden;
 
-        & > li {
+        &>li {
           float: left;
         }
 
