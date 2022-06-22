@@ -56,7 +56,7 @@ const actions = {
       promiseAll.push(promise)
     });
     // 最终返回信息
-    return Promise.all[promiseAll];
+    return Promise.all(promiseAll);
   }
 };
 const getters = {
