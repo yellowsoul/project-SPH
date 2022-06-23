@@ -31,10 +31,12 @@ p1|p2|p3:每一个都是Promise对象，如果有一个Promise失败，都失败
 
 
 
-
-
-
 4)注册的业务---表单验证选不做
+4.1注册业务|登录业务中表单验证先不处理【最后一天统一处理】
+4.2获取验证码的接口 /api/user/passport/sendCode/{phone} get
+
+
+
 4.1获取验证码  ----/api/user/passport/sendCode/{phone}
 4.2注册用户
 
