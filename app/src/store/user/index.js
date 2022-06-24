@@ -1,15 +1,19 @@
 // 登录与注册的模块
-import { reqGetCode, reqUserLogin, reqUserRegister } from '@/api'
+import { reqGetCode, reqUserLogin, reqUserRegister, reqUserInfo } from '@/api'
 const state = {
   code: "",
-  token:""
+  token:"",
+  userInfo:{}
 };
 const mutations = {
   GETCODE(state, code) {
     state.code = code;
   },
   USERLOGIN(state, token){
-    state.token = token
+    state.token = token;
+  },
+  GETUSERINFO(state,userInfo){
+    state.userInfo = userInfo;
   }
 };
 const actions = {
@@ -45,6 +49,16 @@ const actions = {
       return 'ok'
     }else{
       return Promise.reject(new Error('faile'))
+    }
+  },
+
+  // 获取用户信息
+  async getUserInfo({commit}){
+    let result = await reqUserInfo();
+    if(result.code == 200){
+      // 提交用户信息
+      commit('GETUSERINFO',result.data);
+      return 'ok'
     }
   }
 };

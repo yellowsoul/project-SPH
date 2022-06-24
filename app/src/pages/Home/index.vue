@@ -43,6 +43,9 @@ export default {
     // 因为第一次书写轮播图的时候，是在当前组件的内部发请求、动态渲染结构【前提至少服务器的数据需要回来】，因此当年的写法在这里不行
     // 现在的这种写法为什么可以：因为请求是父组件发的，父组件通过props传递过来的，而且结构都已经有了的情况下执行mounted
     this.$store.dispatch("getFloorList");
+
+    // 获取用户信息在首页展示
+    this.$store.dispatch("getUserInfo");
   },
   computed:{
     ...mapState({

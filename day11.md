@@ -29,3 +29,4 @@ URL:/api/user/passport/auth/getUserInfo  method:get
 复习：
 1:完成了登录与注册的静态组件【assets文件夹：组件共用的静态资源 CSS当中书写@符号】
 2：表单验证暂时没有处理，最后一天统一处理
+3:vuex存储数据非持久化的
