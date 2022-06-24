@@ -80,7 +80,7 @@
         try {
           // 登录成功
           const {phone, password} = this;
-          phone && password && (await this.$store.dispatch('reqUserLogin', {phone, password}));
+          phone && password && (await this.$store.dispatch('userLogin', {phone, password}));
           // 跳转到home首页
           this.$router.push("/home");
         } catch (error) {

@@ -36,7 +36,7 @@ const actions = {
   },
 
   // 登务业务【token】
-  async reqUserLogin({ commit }, data){
+  async userLogin({ commit }, data){
     let result = await reqUserLogin(data);
     // 服务器下发token，用户唯一标识符(uuid)
     // 将来经常通过带token找服务器要用户信息进行展示
