@@ -98,7 +98,7 @@ export default {
         // 如果成功----路由跳转
         const {phone, code, password, password1} = this;
         (phone && code && password == password1) && await this.$store.dispatch("userRegister",{phone, code, password});
-        // this.$router.push('/login');
+        this.$router.push('/login');
       } catch (error) {
         alert(error.message);
       }
