@@ -45,7 +45,7 @@ export default {
     this.$store.dispatch("getFloorList");
 
     // 获取用户信息在首页展示
-    this.$store.dispatch("getUserInfo");
+    // this.$store.dispatch("getUserInfo"); -> 已转移至路由守卫
   },
   computed:{
     ...mapState({

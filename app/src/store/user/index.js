@@ -70,7 +70,9 @@ const actions = {
     if(result.code == 200){
       // 提交用户信息
       commit('GETUSERINFO',result.data);
-      return 'ok'
+      return 'ok';
+    }else{
+      return Promise.reject(new Error('faile'));
     }
   },
 
