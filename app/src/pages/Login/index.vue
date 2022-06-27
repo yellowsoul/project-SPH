@@ -84,7 +84,7 @@
           // 跳转到home首页
           this.$router.push("/home");
         } catch (error) {
-          alert(error.massage);
+          alert(error.message);
         }
       }
     }

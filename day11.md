@@ -33,6 +33,16 @@ URL:/api/user/passport/auth/getUserInfo  method:get
 
 
 
+4)整个项目，游客（uuid）与用户（token），后台老师以token为大
+
+
+
+5)统一登录帐号
+13700000000    111111
+
+
+
+
 
 
 
