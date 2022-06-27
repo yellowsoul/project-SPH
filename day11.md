@@ -42,6 +42,11 @@ URL:/api/user/passport/auth/getUserInfo  method:get
 
 
 
+6)获取交易页面用户信息？
+用户登录了才可以获取用户地址信息，不登录没办法获取到的
+
+
+
 
 
 
