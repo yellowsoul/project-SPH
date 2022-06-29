@@ -119,6 +119,8 @@ export default {
     return {
       // 收集买家的留言信息
       msg: "",
+      // 订单号
+      orderId:''
     };
   },
   // 生命周期函数：挂载完毕
@@ -156,12 +158,20 @@ export default {
         deliveryAddress: this.userDefaultAddress.fullAddress, //收件人的地址
         paymentWay: "ONLINE", //支付方式
         orderComment: this.msg, //买家的留言信息
-        orderDetailList: this.orderInfo.detailArrayLis, //商品清单
+        orderDetailList: this.orderInfo.detailArrayList, //商品清单
       };
 
       // 需要带参数的：tradeNo
       let result = await this.$API.reqSubmitOrder(tradeNo, data);
-      console.log(result)
+      // 提交订单成功
+      if(result.code == 200){
+        this.orderId = result.data;
+        // 路由跳转 + 路由传递参数
+        this.$router.push('/pay?orderId='+this.orderId)
+        // 提交订单失败
+      }else{
+        console.log(result)
+      }
     },
   },
 };

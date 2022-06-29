@@ -15,14 +15,17 @@
 
 
 3)获取支付信息（不在使用vuex）
+3.1别在生命周期函数中async
+3.2获取支付信息
 
 
 
+4)elementUI使用 + 按需引入
+已经学习过组件库
+React(Vue):antd[PC] antd-mobile【移动端】
+Vue:ElementUI[PC]   vant[移动端]
 
-4)elementUI使用 + 按霄引入
-
-
-
+4.1elementUI按需引入，配置文件发生变化，项目需要重启的
 
 5)二维码生成 qrcode
 

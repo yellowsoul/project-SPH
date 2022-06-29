@@ -74,5 +74,9 @@ export const reqAddressInfo = () => requests({url:'/user/userAddress/auth/findUs
 // 获取商品清单 URL: /api/order/auth/trade method:get
 export const reqOrderInfo = () => requests({url:'/order/auth/trade',method:'get'})
 
+
 // 提交订单的接口 URL: /api/order/auth/submitOrder?tradeNo={tradeNo} method:post
 export const reqSubmitOrder = (tradeNo, data) => requests({url:`/order/auth/submitOrder?tradeNo=${tradeNo}`, data, method:'post'})
+
+// 获取支付信息  URL: /api/payment/weixin/createNative/{orderId} method:get
+export const reqPayInfo = (orderId) => requests({url:`/payment/weixin/createNative/${orderId}`,method:'get'})

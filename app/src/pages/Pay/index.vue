@@ -1,5 +1,6 @@
 <template>
   <div class="pay-main">
+    <el-button icon="el-icon-plus">测试</el-button>
     <div class="pay-container">
       <div class="checkout-tit">
         <h4 class="tit-txt">
@@ -7,8 +8,8 @@
           <span class="success-info">订单提交成功，请您及时付款，以便尽快为您发货~~</span>
         </h4>
         <div class="paymark">
-          <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>145687</em></span>
-          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥17,654</em></span>
+          <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>{{orderId}}</em></span>
+          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥{{payInfo.totalFee}}</em></span>
         </div>
       </div>
       <div class="checkout-info">
@@ -65,7 +66,7 @@
         <div class="hr"></div>
 
         <div class="submit">
-          <router-link class="btn" to="/paysuccess">立即支付</router-link>
+          <a  class="btn" @click="open">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -84,6 +85,48 @@
 <script>
   export default {
     name: 'Pay',
+    data(){
+      return {
+        payInfo:{}
+      }
+    },
+    computed:{
+      orderId(){
+        return this.$route.query.orderId;
+      }
+    },
+
+    // 工作的时候：尽量别在生命周期函数中async|await
+    mounted(){
+      this.getPayInfo()
+    },
+    methods:{
+      // 获取支付信息
+      async getPayInfo(){
+        let result = await this.$API.reqPayInfo(this.orderId);
+        // 如果成功，组件当中存储支付信息
+        if(result.code == 200){
+          this.payInfo = result.data;
+        }
+      },
+
+      // 弹出框
+      open() {
+        this.$alert('<strong>这是 <i>HTML</i> 片段</strong>', 'HTML 片段', {
+          dangerouslyUseHTMLString: true,
+          // 中间布局
+          center:true,
+          // 是否显示取消按钮
+          showCancelButton:true,
+          // 取消按钮文本内容
+          cancelButtonText:"支付遇见问题",
+          // 确定按钮的文本
+          confirmButtonText:"已支付成功",
+          // 右上角的关闭图标
+          showClose:false
+        });
+      }
+    }
   }
 </script>
 
