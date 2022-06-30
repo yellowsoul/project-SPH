@@ -136,7 +136,7 @@
             // instance：当前组件实例
             // 关闭弹出框的方法
             if(type == 'cancel'){
-              alert('新联系管理员');
+              alert('请联系管理员');
               clearInterval(this.timer);
               this.timer = null;
               // 关闭弹出框
@@ -158,20 +158,20 @@
         // 定时器没有，开启一个新的定时器
         if(!this.timer){
           this.timer = setInterval(async () => {
-          // 发请求获取用户支付状态
-          let result = await this.$API.reqPayStatus(this.orderId);
-          // 如果code == 200 成功
-          if(result.code == 200){
-            // 第一步：清除定时器
-            clearInterval(this.timer);
-            this.timer = null;
-            // 保存支付成功返回的code
-            this.code = result.code;
-            // 关闭弹出框
-            this.$msgbox.close();
-            // 跳转到下一路由
-            this.$router.push('/paysuccess');
-          }
+            // 发请求获取用户支付状态
+            let result = await this.$API.reqPayStatus(this.orderId);
+            // 如果code == 200 成功
+            if(result.code == 200){
+              // 第一步：清除定时器
+              clearInterval(this.timer);
+              this.timer = null;
+              // 保存支付成功返回的code
+              this.code = result.code;
+              // 关闭弹出框
+              this.$msgbox.close();
+              // 跳转到下一路由
+              this.$router.push('/paysuccess');
+            }
           }, 1000);
         }
       }
