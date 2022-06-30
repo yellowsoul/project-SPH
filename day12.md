@@ -27,11 +27,16 @@ Vue:ElementUI[PC]   vant[移动端]
 
 4.1elementUI按需引入，配置文件发生变化，项目需要重启的
 
+
+
 5)二维码生成 qrcode
 
 
 
+
+
 6)支付业务
+
 
 
 
