@@ -63,7 +63,8 @@ export default [
         next();
       }else{
         // 其它的路由组件而来，停留在当前
-        next(false);
+        // next(false);
+        next("/home")
       }
     },
   },

@@ -96,6 +96,7 @@ router.beforeEach(async (to, from, next) => {
     let toPath = to.path;
     if(toPath.indexOf('/trade') !=-1 || toPath.indexOf('/pay') !=-1 || toPath.indexOf('/center') !=-1){
       // 把未登录的时候想去而没有去成的信息，存储于路由当中
+      console.log(toPath)
       next('/login?redirect='+toPath)
       // console.log(decodeURIComponent(toPath));
     }else{
