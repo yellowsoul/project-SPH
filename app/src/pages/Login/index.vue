@@ -81,8 +81,17 @@
           // 登录成功
           const {phone, password} = this;
           phone && password && (await this.$store.dispatch('userLogin', {phone, password}));
-          // 跳转到home首页
-          this.$router.push("/home");
+          // 登录的路由组件：看路由当中是否包含query参数，有：跳到query参数指定路由，没有：跳到home
+          let toPath = this.$route.query.redirect || "/home";
+
+          /**
+           * 发现问题：未登录时操作至购物车结算，全局路由守卫判断想进入【订单/trade】需要跳转到登录页重定向（携带query参数/trade） -> 点登录按钮后，由于在“路由独享守卫中”又设置了进入【订单/trade】路由的前提必须是从【购物车/shopcart】跳转而来的才可以。
+           * 黄龙解决：判断如果query参数等于 /trade，把toPath重置为首页/home
+           */
+          toPath = toPath == "/trade" ? "/home" : "";
+          this.$router.push(toPath);
+
+
         } catch (error) {
           alert(error.message);
         }
