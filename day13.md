@@ -11,12 +11,17 @@
 
 
 3）路由独享守卫
+
 只有从购物车界面才能跳转到交易页面（创建订单）
 只有从交易页面（创建订单）页面才能跳转到支付页面
 只有从支付页面才能跳转到支付成功页面
 
+
+
+
+
 4）图片懒加载
-https://www.npmjs.com/package/uve-lazyload
+https://www.npmjs.com/package/vue-lazyload(注意：我在此版本中用的是低版本@1.3.1)
 
 
 

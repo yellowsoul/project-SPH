@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 v-upper="msg"></h1>
     <Header></Header>
     <!-- 路由组件出口的地方 -->
     <router-view />
@@ -19,7 +20,9 @@ export default {
     Footer,
   },
   data() {
-    return {};
+    return {
+      msg:"abc"
+    };
   },
   mounted() {
     // 派发一个action||获取商品分类的三级数据，存储于仓库当中

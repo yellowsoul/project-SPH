@@ -14,9 +14,9 @@ import { Button, MessageBox } from 'element-ui';
 // 第一参数：全局组件的名字 第二个参数：哪一个组件
 Vue.component(TypeNav.name, TypeNav);
 Vue.component(Carousel.name, Carousel);
-Vue.component(Pagination.name,Pagination);
+Vue.component(Pagination.name, Pagination);
 // elm注册全局组件
-Vue.component(Button.name,Button)
+Vue.component(Button.name, Button)
 // ElementUI注册组件的时候，还有一种写法，挂载原型上
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
@@ -31,10 +31,31 @@ import "swiper/css/swiper.css"
 // 统一引入
 import * as API from '@/api';
 console.log(API)
+
+import atm from '@/assets/logo.png';
+console.log(atm)
+// 引入图片懒加载插件
+import VueLazyload from 'vue-lazyload';
+// 注册插件
+Vue.use(VueLazyload, {
+  // 懒加载默认的图片
+  loading:atm
+});
+
+
+
+
+
+// 引入自定义插件（测试）
+import myPlugins from '@/pages/plugins/myPlugins';
+Vue.use(myPlugins,{
+  name:'upper'
+})
+
 new Vue({
   render: h => h(App),
   // 全局事件总线$bus配置
-  beforeCreate(){
+  beforeCreate() {
     Vue.prototype.$bus = this;
     Vue.prototype.$API = API;
   },
