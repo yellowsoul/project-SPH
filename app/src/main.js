@@ -43,15 +43,14 @@ Vue.use(VueLazyload, {
 });
 
 
-
-
-
 // 引入自定义插件（测试）
-import myPlugins from '@/pages/plugins/myPlugins';
+import myPlugins from '@/plugins/myPlugins';
 Vue.use(myPlugins,{
   name:'upper'
-})
+});
 
+// 引入表单校验插件
+import "@/plugins/validate";
 new Vue({
   render: h => h(App),
   // 全局事件总线$bus配置
